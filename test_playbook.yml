@@ -1,0 +1,12 @@
+---
+
+- name: Basic AAP playbook
+  hosts: all
+
+  tasks:
+
+    - name: Debug hellow world message
+      ansible.builtin.debug:
+        msg: Hello World!
+
+...
