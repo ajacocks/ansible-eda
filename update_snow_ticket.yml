@@ -18,8 +18,17 @@
     - name: Update a ServiceNow ticket with a new comment
       servicenow.itsm.incident:
         number: "{{ snow.id }}"
-        comment: this is a new comment
+        other:
+          work_notes: this is a new comment
         state: new
       register: result
 
+    - name: Retrieve a specific incident by its sys_id
+      servicenow.itsm.incident_info:
+        number: "{{ snow.id }}"
+      register: result
+
+    - debug:
+        var: result
+        
 ...
