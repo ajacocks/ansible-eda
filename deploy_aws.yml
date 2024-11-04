@@ -1,0 +1,64 @@
+---
+
+- name: create a simple aws instance
+  hosts: all
+
+  vars:
+    aws:
+      name: "test-instance-jaj-{{ now(utc=true,fmt='%Y%m%d-%H:%M:%S') }}"
+      ami: ami-075ebe905fe3c41cf
+      sg: "test-sg-jaj-{{ now(utc=true,fmt='%Y%m%d-%H:%M:%S') }}"
+      vpc: "test-vpc-jaj-{{ now(utc=true,fmt='%Y%m%d-%H:%M:%S') }}"
+
+
+  tasks:
+
+    - name: Create an aws vpc with a public subnet
+      amazon.aws.ec2_vpc_net:
+        name: "{{ aws.vpc }}"
+        cidr_block: 10.0.0.60/16
+        state: present
+        tags:
+          Name: "{{ aws.vpc }}"
+          Created: "{{ now(utc=true,fmt='%Y%m%d-%H:%M:%S') }}"
+      register: vpc_result
+
+    - debug: vpc_result
+
+    - name: Create an aws security group that allows only ssh and http
+      register: sg_result
+      amazon.aws.ec2_security_group:
+        name: "{{ aws.sg }}"
+        description: "{{ aws.sg }}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+        rules_egress:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+        state: present
+        vpc_id: "{{ vpc_result.vpc.id }}"
+
+    - name: Create a t3a.micro aws instance on us-east-2
+      amazon.aws.ec2_instance:
+        name: "{{ aws.name }}"
+        image_id: "{{ aws.ami }}"
+        security_group: "{{ aws.sg }}"
+        instance_type: t3a.micro
+        vpc_subnet_id: "{{ aws.vpc }}"
+        tags:
+          Name: '{{ aws.name }}-t3a-micro'
+          AnsibleTest: AnsibleTestVpc
+        wait: true
+        state: present
+      register: simple_instance
+
+...
