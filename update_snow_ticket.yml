@@ -16,8 +16,8 @@
       servicenow.itsm.incident:
         number: "{{ snow.id }}"
         other:
-          work_notes: this is a test of work_notes. you said "{{ message | default('nothing') }}".
-          comments: this is a test of comments. you said "{{ message | default('nothing') }}".
+          work_notes: "{{ message | default('nothing') }}"
+          comments: "{{ message | default('nothing') }}"
         state: in_progress
       register: result
 
