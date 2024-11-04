@@ -21,7 +21,7 @@
       condition: event.payload.message == "Hello"
       action:
         run_job_template:
-          name: 'Hello world'
+          name: 'Update SNow ticket'
           organization: 'Default'
 
     - name: Didn't hear Hello
