@@ -19,8 +19,9 @@
       servicenow.itsm.incident:
         number: "{{ snow.id }}"
         other:
-          work_notes: this is a new comment
-        state: new
+          additional_comments: this is a test of additional_comments
+          work_notes: this is a test of work_notes
+        state: in_progress
       register: result
 
     - name: Retrieve a specific incident by its sys_id
@@ -30,5 +31,5 @@
 
     - debug:
         var: result
-        
+
 ...
