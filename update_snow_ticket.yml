@@ -17,7 +17,7 @@
             number: "{{ message | regex_replace('|.*', '') }}"
             other:
               work_notes: "Update recieved from EDA."
-              comments: "{{ text | regex_replace('^.*|', '') }}"
+              comments: "{{ snow.text | regex_replace('^.*|', '') }}"
             state: in_progress
           register: result
 
@@ -29,8 +29,8 @@
           servicenow.itsm.incident:
             number: "{{ snow.id }}"
             other:
-              work_notes: "{{ message | default('nothing') }}"
-              comments: "{{ message | default('nothing') }}"
+              work_notes: "Update recieved from EDA."
+              comments: "{{ snow.text | regex_replace('^.*|', '') }}"
             state: in_progress
           register: result
 
