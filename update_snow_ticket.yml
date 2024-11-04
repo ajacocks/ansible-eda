@@ -8,13 +8,19 @@
 
   tasks:
 
+    - debug:
+        var: snow.text
+    
+    - debug:
+        msg: "{{ snow.text | regex_replace('|.*', '') }}"
+
     - name: Update a specified incident with a message
       when: message | regex_search('^INC')
       block:
 
         - name: Update a ServiceNow ticket with a new comment
           servicenow.itsm.incident:
-            number: "{{ message | regex_replace('|.*', '') }}"
+            number: "{{ snow.text | regex_replace('|.*', '') }}"
             other:
               work_notes: "Update recieved from EDA."
               comments: "{{ snow.text | regex_replace('^.*|', '') }}"
