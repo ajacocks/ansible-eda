@@ -9,15 +9,15 @@
 
     - name: Retrieve a specific incident by its sys_id
       servicenow.itsm.incident_info:
-        sys_id: INC0010107
+        number: "{{ snow.id }}"
       register: result
-    
+
     - debug:
         var: result
 
     - name: Update a ServiceNow ticket with a new comment
       servicenow.itsm.incident:
-        sys_id: "{{ snow.id }}"
+        number: "{{ snow.id }}"
         comment: this is a new comment
         state: new
       register: result
