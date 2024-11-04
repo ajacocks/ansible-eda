@@ -7,23 +7,17 @@
 
   tasks:
 
-    - debug:
-        var: message
-
     - name: Retrieve a specific incident by its sys_id
       servicenow.itsm.incident_info:
         number: "{{ snow.id }}"
       register: result
-
-    - debug:
-        var: result
 
     - name: Update a ServiceNow ticket with a new comment
       servicenow.itsm.incident:
         number: "{{ snow.id }}"
         other:
           work_notes: this is a test of work_notes. you said "{{ message | default('nothing') }}".
-          comments: test is a test of comments. you said "{{ message | default('nothing') }}".
+          comments: this is a test of comments. you said "{{ message | default('nothing') }}".
         state: in_progress
       register: result
 
@@ -31,8 +25,5 @@
       servicenow.itsm.incident_info:
         number: "{{ snow.id }}"
       register: result
-
-    - debug:
-        var: result
 
 ...
