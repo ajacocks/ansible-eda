@@ -1,0 +1,17 @@
+- name: Update a ServiceNow ticket
+  hosts: all
+
+  vars:
+    snow:
+      id: INC0010107
+
+  tasks:
+
+    - name: Update a ServiceNow ticket with a new comment
+      servicenow.itsm.ticket:
+        sys_id: "{{ snow.id }}"
+        comment: this is a new comment
+        state: new
+      register: result
+
+...
