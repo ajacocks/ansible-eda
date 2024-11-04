@@ -16,7 +16,7 @@
       servicenow.itsm.incident:
         number: "{{ snow.id }}"
         other:
-          work_notes: "{{ message | default('nothing') }}"
+          work_notes: "Update recieved from EDA."
           comments: "{{ message | default('nothing') }}"
         state: in_progress
       register: result
