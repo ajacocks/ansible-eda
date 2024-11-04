@@ -4,22 +4,35 @@
   vars:
     snow:
       id: INC0010107
+      text: "{{ message | default('INC0010107|nothing') }}"
 
   tasks:
 
-    - name: Retrieve a specific incident by its sys_id
-      servicenow.itsm.incident_info:
-        number: "{{ snow.id }}"
-      register: result
+    - name: Update a specified incident with a message
+      when: message | regex_search('^INC')
+      block:
 
-    - name: Update a ServiceNow ticket with a new comment
-      servicenow.itsm.incident:
-        number: "{{ snow.id }}"
-        other:
-          work_notes: "{{ message | default('nothing') }}"
-          comments: "{{ message | default('nothing') }}"
-        state: in_progress
-      register: result
+        - name: Update a ServiceNow ticket with a new comment
+          servicenow.itsm.incident:
+            number: "{{ message | regex_replace('|.*', '') }}"
+            other:
+              work_notes: "Update recieved from EDA."
+              comments: "{{ text | regex_replace('^.*|', '') }}"
+            state: in_progress
+          register: result
+
+    - name: Update an unspecified incident with a message
+      when: not message | regex_search('^INC')
+      block:
+
+        - name: Update a ServiceNow ticket with a new comment
+          servicenow.itsm.incident:
+            number: "{{ snow.id }}"
+            other:
+              work_notes: "Update recieved from EDA."
+              comments: "{{ text | regex_replace('^.*|', '') }}"
+            state: in_progress
+          register: result
 
     - name: Retrieve a specific incident by its sys_id
       servicenow.itsm.incident_info:
