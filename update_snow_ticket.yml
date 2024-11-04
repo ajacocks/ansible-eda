@@ -8,7 +8,7 @@
   tasks:
 
     - name: Update a ServiceNow ticket with a new comment
-      servicenow.itsm.ticket:
+      servicenow.itsm.incident:
         sys_id: "{{ snow.id }}"
         comment: this is a new comment
         state: new
