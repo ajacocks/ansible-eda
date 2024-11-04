@@ -1,0 +1,33 @@
+---
+- name: An EDA webhook that will submit JCL on a Z/OS System
+  hosts: all
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5002
+
+  # rules:
+  #   - name: Run a JCL job on a Z/OS Mainframe
+  #     condition: event.payload.message == "MERGSORT"
+  #     action:
+  #       run_job_template:
+  #         # name: 'ZOS - Submit a JCL Job'
+  #         name: 'SNOW - Create Incident'
+  #         organization: 'Default'
+  #
+  #
+  rules:
+    - name: Say Hello
+      condition: event.payload.message == "Hello"
+      action:
+        run_job_template:
+          name: 'Hello world'
+          organization: 'Default'
+
+    - name: Didn't hear Hello
+      condition: event.payload.message != "Hello"
+      action:
+        debug:
+          msg: "You said, '{{ event.payload.message }}'. Is that what you meant to say?"
+
+...
