@@ -19,8 +19,8 @@
       servicenow.itsm.incident:
         number: "{{ snow.id }}"
         other:
-          additional_comments: this is a test of additional_comments
           work_notes: this is a test of work_notes
+          comments: test is a test of comments
         state: in_progress
       register: result
 
