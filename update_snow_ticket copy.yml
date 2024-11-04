@@ -25,14 +25,14 @@
       when: not message | regex_search('^INC')
       block:
 
-        - name: Update a ServiceNow ticket with a new comment
-          servicenow.itsm.incident:
-            number: "{{ snow.id }}"
-            other:
-              work_notes: "Update recieved from EDA."
-              comments: "{{ text | regex_replace('^.*|', '') }}"
-            state: in_progress
-          register: result
+    - name: Update a ServiceNow ticket with a new comment
+      servicenow.itsm.incident:
+        number: "{{ snow.id }}"
+        other:
+          work_notes: "{{ message | default('nothing') }}"
+          comments: "{{ message | default('nothing') }}"
+        state: in_progress
+      register: result
 
     - name: Retrieve a specific incident by its sys_id
       servicenow.itsm.incident_info:

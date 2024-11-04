@@ -1,4 +1,4 @@
 {
-    "ansible.python.interpreterPath": "/bin/python",
+    "ansible.python.interpreterPath": "/usr/bin/python3",
     "ansible.lightspeed.enabled": true
 }
