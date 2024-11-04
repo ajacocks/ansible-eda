@@ -17,15 +17,18 @@
   #
   #
   rules:
-    - name: Say Hello
-      condition: event.payload.message == "Hello"
+    - name: Didn't hear hello, update the SNow ticket
+      condition: event.payload.message != "Hello"
       action:
         run_job_template:
           name: 'Update SNow ticket'
           organization: 'Default'
+          job_args:
+            extra_vars:
+              message: "{{ event.payload.message }}"
 
-    - name: Didn't hear Hello
-      condition: event.payload.message != "Hello"
+    - name: Heard Hello - just say what?
+      condition: event.payload.message == "Hello"
       action:
         debug:
           msg: "You said, '{{ event.payload.message }}'. Is that what you meant to say?"
