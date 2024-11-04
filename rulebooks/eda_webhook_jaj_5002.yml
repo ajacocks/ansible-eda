@@ -18,7 +18,7 @@
   #
   rules:
     - name: Didn't hear hello, update the SNow ticket
-      condition: event.payload.message != "Hello"
+      condition: event.payload.message is defined
       action:
         run_job_template:
           name: 'Update SNow ticket'
@@ -27,10 +27,10 @@
             extra_vars:
               message: "{{ event.payload.message }}"
 
-    - name: Heard Hello - just say what?
-      condition: event.payload.message == "Hello"
+    - name: No content, complain
+      condition: event.payload.message is not defined
       action:
         debug:
-          msg: "You said, '{{ event.payload.message }}'. Is that what you meant to say?"
+          msg: "You said nothing. Is that what you meant to say?"
 
 ...
