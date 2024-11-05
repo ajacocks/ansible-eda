@@ -16,7 +16,7 @@
     - name: Update ServiceNow incident
       condition:
         all:
-          - event.payload.short_description contains 'DOWN'
+#          - event.payload.short_description contains 'DOWN'
           - event.payload.sys_created_by == 'alex.jacocks'
       action:
         run_job_template:
