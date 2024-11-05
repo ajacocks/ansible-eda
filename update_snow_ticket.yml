@@ -2,13 +2,17 @@
   hosts: all
 
   vars:
+    text: "{{ message | default('INC0010107:nothing') }}"
     snow:
-      text: "{{ message | default('INC0010107:nothing') }}"
-      id: "{{ snow.text | regex_replace(':.*', '') }}"
-      comment: "{{ snow.text | regex_replace('INC[0-9]+:', '') }}"
+      id: "{{ text | regex_replace(':.*', '') }}"
+      comment: "{{ text | regex_replace('INC[0-9]+:', '') }}"
 
   tasks:
 
+    - name: Debug text
+      ansible.builtin.debug:
+        var: text
+  
     - name: Debug snow
       ansible.builtin.debug:
         var: snow
