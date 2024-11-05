@@ -8,10 +8,6 @@
 
   tasks:
 
-    - name: Debug text
-      ansible.builtin.debug:
-        var: text
-
     - name: Debug snow
       ansible.builtin.debug:
         var: snow
