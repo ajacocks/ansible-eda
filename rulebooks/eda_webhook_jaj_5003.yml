@@ -20,4 +20,11 @@
               message: "Ansible EDA is working on it!"
               id: "{{ event.payload.number }}"
 
+    - name: Update ServiceNow incident
+      condition: event.payload.sys_created_by == 'alex.jacocks' and event.payload.short_description is search('CREATE')
+      action:
+        run_job_template:
+          name: 'AWS - Create an EC2 Instance'
+          organization: 'Default'
+
 ...
