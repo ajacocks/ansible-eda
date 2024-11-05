@@ -26,7 +26,7 @@
           job_args:
             extra_vars:
               message: "{{ event.payload.message }}"
-              message2: "{{ event.payload.message2 }}"
+              id: "{{ event.payload.id }}"
 
     - name: No content, complain
       condition: event.payload.message is not defined
