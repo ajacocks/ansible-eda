@@ -5,14 +5,14 @@
     text: "{{ message | default('INC0010107:nothing') }}"
     snow:
       id: "{{ text | regex_replace(':.*', '') }}"
-      comment: "{{ text | regex_replace('INC[0-9]+:', '') }}"
+      comment: "{{ text | regex_replace('^INC[0-9]+:', '') }}"
 
   tasks:
 
     - name: Debug text
       ansible.builtin.debug:
         var: text
-  
+
     - name: Debug snow
       ansible.builtin.debug:
         var: snow
