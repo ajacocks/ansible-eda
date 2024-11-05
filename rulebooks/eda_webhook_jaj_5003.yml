@@ -13,4 +13,18 @@
       action:
         debug:
 
+    - name:
+      condition:
+        all:
+          - event.payload.short_description contains 'DOWN'
+          - event.payload.sys_created_by == 'alex.jacocks'
+      action:
+        run_job_template:
+          name: 'Update SNow ticket'
+          organization: 'Default'
+          job_args:
+            extra_vars:
+              message: "Ansible EDA is working on it!"
+              id: "{{ event.payload.number }}"
+
 ...
