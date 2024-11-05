@@ -8,6 +8,11 @@
       comment: "{{ snow.text | regex_replace('INC[0-9]+:', '') }}"
 
   tasks:
+
+    - name: Debug snow
+      ansible.builtin.debug:
+        var: snow
+
     - name: Update a ServiceNow ticket with a new comment
       servicenow.itsm.incident:
         number: "{{ snow.id }}"
