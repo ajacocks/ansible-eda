@@ -2,10 +2,9 @@
   hosts: all
 
   vars:
-    text: "{{ message | default('INC0010107:nothing') }}"
     snow:
-      id: "{{ text | regex_replace(':.*', '') }}"
-      comment: "{{ text | regex_replace('^INC[0-9]+:', '') }}"
+      incident: "{{ id | default('INC0010107') }}"
+      comment: "{{ message | default('No message specified.') }}"
 
   tasks:
 
@@ -19,7 +18,7 @@
 
     - name: Update a ServiceNow ticket with a new comment
       servicenow.itsm.incident:
-        number: "{{ snow.id | default('INC0010107') }}"
+        number: "{{ snow.incident }}"
         other:
           work_notes: "Update recieved from EDA."
           comments: "{{ snow.comment }}"
@@ -28,7 +27,7 @@
 
     - name: Retrieve a specific incident by its sys_id
       servicenow.itsm.incident_info:
-        number: "{{ snow.id | default('INC0010107') }}"
+        number: "{{ snow.incident }}"
       register: result
 
 ...
