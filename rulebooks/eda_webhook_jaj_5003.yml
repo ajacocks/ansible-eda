@@ -10,7 +10,7 @@
   rules:
 
     - name: Update ServiceNow incident
-      condition: event.payload.sys_created_by == 'alex.jacocks'
+      condition: event.payload.sys_created_by == 'alex.jacocks' and event.payload.short_description is search('DOWN')
       action:
         run_job_template:
           name: 'Update SNow ticket'
