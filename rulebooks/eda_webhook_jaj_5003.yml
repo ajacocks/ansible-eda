@@ -13,7 +13,7 @@
       action:
         debug:
 
-    - name:
+    - name: Update ServiceNow incident
       condition:
         all:
           - event.payload.short_description contains 'DOWN'
